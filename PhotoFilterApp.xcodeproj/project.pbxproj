@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03124C9C19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03124C9B19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift */; };
+		03124C9E19EDC77400D5EE46 /* FilteredThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03124C9D19EDC77400D5EE46 /* FilteredThumbnail.swift */; };
 		037D96E619EC6095007480DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037D96E519EC6095007480DF /* AppDelegate.swift */; };
 		037D96E919EC6095007480DF /* PhotoFilterApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 037D96E719EC6095007480DF /* PhotoFilterApp.xcdatamodeld */; };
 		037D96EB19EC6095007480DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037D96EA19EC6095007480DF /* ViewController.swift */; };
@@ -25,6 +27,10 @@
 		037D971F19EC6B69007480DF /* Photo6.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 037D971719EC6B69007480DF /* Photo6.jpeg */; };
 		037D972019EC6B69007480DF /* Photo7.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 037D971819EC6B69007480DF /* Photo7.jpeg */; };
 		037D972119EC6B69007480DF /* Photo8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 037D971919EC6B69007480DF /* Photo8.jpg */; };
+		03CDCF7D19EDEF92008561BE /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCF7C19EDEF92008561BE /* Filter.swift */; };
+		03CDCF7F19EDEFD6008561BE /* CoreDataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CDCF7E19EDEFD6008561BE /* CoreDataSeeder.swift */; };
+		03D7144819EEF26000E02F86 /* PhotosFrameworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D7144719EEF26000E02F86 /* PhotosFrameworkCell.swift */; };
+		03D7144A19EEF2B700E02F86 /* PhotosFrameworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D7144919EEF2B700E02F86 /* PhotosFrameworkViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03124C9B19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterThumbnailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		03124C9D19EDC77400D5EE46 /* FilteredThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredThumbnail.swift; sourceTree = "<group>"; };
 		037D96E019EC6095007480DF /* PhotoFilterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoFilterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		037D96E419EC6095007480DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		037D96E519EC6095007480DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +68,10 @@
 		037D971719EC6B69007480DF /* Photo6.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Photo6.jpeg; sourceTree = "<group>"; };
 		037D971819EC6B69007480DF /* Photo7.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Photo7.jpeg; sourceTree = "<group>"; };
 		037D971919EC6B69007480DF /* Photo8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Photo8.jpg; sourceTree = "<group>"; };
+		03CDCF7C19EDEF92008561BE /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = ../Filter.swift; sourceTree = "<group>"; };
+		03CDCF7E19EDEFD6008561BE /* CoreDataSeeder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataSeeder.swift; sourceTree = "<group>"; };
+		03D7144719EEF26000E02F86 /* PhotosFrameworkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosFrameworkCell.swift; sourceTree = "<group>"; };
+		03D7144919EEF2B700E02F86 /* PhotosFrameworkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosFrameworkViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +155,9 @@
 			isa = PBXGroup;
 			children = (
 				037D96EC19EC6095007480DF /* Main.storyboard */,
+				03124C9B19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift */,
+				037D970D19EC6621007480DF /* GalleryCell.swift */,
+				03D7144719EEF26000E02F86 /* PhotosFrameworkCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -152,6 +167,7 @@
 			children = (
 				037D96EA19EC6095007480DF /* ViewController.swift */,
 				037D970F19EC663A007480DF /* GalleryViewController.swift */,
+				03D7144919EEF2B700E02F86 /* PhotosFrameworkViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -159,8 +175,10 @@
 		037D970C19EC63D0007480DF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				03124C9D19EDC77400D5EE46 /* FilteredThumbnail.swift */,
+				03CDCF7C19EDEF92008561BE /* Filter.swift */,
+				03CDCF7E19EDEFD6008561BE /* CoreDataSeeder.swift */,
 				037D971119EC6B69007480DF /* Photos */,
-				037D970D19EC6621007480DF /* GalleryCell.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -291,9 +309,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				037D970E19EC6621007480DF /* GalleryCell.swift in Sources */,
+				03124C9C19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift in Sources */,
 				037D96EB19EC6095007480DF /* ViewController.swift in Sources */,
+				03D7144819EEF26000E02F86 /* PhotosFrameworkCell.swift in Sources */,
 				037D971019EC663A007480DF /* GalleryViewController.swift in Sources */,
+				03124C9E19EDC77400D5EE46 /* FilteredThumbnail.swift in Sources */,
+				03D7144A19EEF2B700E02F86 /* PhotosFrameworkViewController.swift in Sources */,
+				03CDCF7D19EDEF92008561BE /* Filter.swift in Sources */,
 				037D96E919EC6095007480DF /* PhotoFilterApp.xcdatamodeld in Sources */,
+				03CDCF7F19EDEFD6008561BE /* CoreDataSeeder.swift in Sources */,
 				037D96E619EC6095007480DF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,9 +443,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PhotoFilterApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -429,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PhotoFilterApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -488,6 +515,7 @@
 				037D970419EC6095007480DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		037D970519EC6095007480DF /* Build configuration list for PBXNativeTarget "PhotoFilterAppTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +524,7 @@
 				037D970719EC6095007480DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

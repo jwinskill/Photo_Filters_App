@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7C19CB2D-07F8-4344-A521-2A447FE456AA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PhotoFilterApp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6062E3F1F84C7A1DD2349607AA8BD454F179EE59</key>
+		<string>github.com:jwinskill/Photo_Filters_App.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PhotoFilterApp.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6062E3F1F84C7A1DD2349607AA8BD454F179EE59</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:jwinskill/Photo_Filters_App.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>6062E3F1F84C7A1DD2349607AA8BD454F179EE59</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6062E3F1F84C7A1DD2349607AA8BD454F179EE59</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PhotoFilterApp</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Photos
 
 protocol GalleryDelegate {
     
     func didTapOnPicture(image: UIImage)
+
 }
 
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -45,6 +47,8 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         self.images.append(image8)
     }
     
+    // MARK: UICollectionViewDataSource methods
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count
     }
@@ -54,6 +58,8 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         cell.cellImageView.image = self.images[indexPath.row]
         return cell
     }
+    
+    // MARK: UICollectionViewDelegate methods
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.delegate?.didTapOnPicture(self.images[indexPath.row])
