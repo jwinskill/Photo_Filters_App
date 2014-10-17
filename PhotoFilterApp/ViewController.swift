@@ -10,6 +10,8 @@ import UIKit
 import CoreImage
 import OpenGLES
 import CoreData
+import Social
+import Accounts
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, GalleryDelegate {
     
@@ -26,10 +28,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // Properties for filtering
     var context: CIContext?
     var originalThumbnail: UIImage?
- //   var filterNames = [String]()
     var filters = [Filter]()
     var imageQueue = NSOperationQueue()
     var filterThumbnails = [FilteredThumbnail]()
+    
+    // Properties fro social
+    var twitterAccount: ACAccount?
     
     
     // Start functions
@@ -110,6 +114,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         } else if segue.identifier == "AVFOUNDATION_SEGUE" {
             let destinationVC = segue.destinationViewController as AVFoundationCameraViewController
             destinationVC.delegate = self
+            destinationVC.parentImageSize = self.imageView.bounds.size
         }
     }
     
@@ -176,9 +181,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // MARK: UICollectionViewDelegate Method
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
         var filteredThumbnail = FilteredThumbnail(name: self.filters[indexPath.row].name, thumbnail: self.imageView.image!, queue: imageQueue, context: self.context!)
+       
+        var imageFilter = CIFilter(name: filters[indexPath.row].name)
         filteredThumbnail.applyFilter({ (image) -> Void in
-            self.imageView.image = image
+           // var scale = UIScreen.mainScreen().scale
+            self.imageView.image = UIImage(CGImage: image.CGImage, scale: 2.0, orientation: UIImageOrientation.Up)
         })
     }
     
@@ -224,6 +233,45 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         self.filterThumbnails = newFilters
     }
+    
+    // MARK: Social methods
+    
+    func tweet(message: String?, image: UIImage?, url: NSURL?) {
+        let accountStore = ACAccountStore()
+        let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
+        accountStore.requestAccessToAccountsWithType(accountType, options: nil) { (granted: Bool, error: NSError!) -> Void in
+            if granted {
+                let accounts = accountStore.accountsWithAccountType(accountType)
+                self.twitterAccount = accounts.first as? ACAccount
+                
+                if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
+                    let controller = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                    controller.setInitialText(message)
+                    controller.addImage(image)
+                    controller.addURL(url)
+                    controller.completionHandler = { (result: SLComposeViewControllerResult) -> Void in
+                        switch result {
+                        case SLComposeViewControllerResult.Cancelled:
+                            println("tweet: cancelled")
+                        case SLComposeViewControllerResult.Done:
+                            println("tweet: success")
+                        }
+                    }
+                    self.presentViewController(controller, animated: true, completion: { () -> Void in
+                        // Controller is presented
+                    })
+                }
+            } else {
+                println("Twitter is not available")
+            }
+        }
+    }
+    
+    @IBAction func tweetButtonPressed(sender: AnyObject) {
+        self.tweet(nil, image: self.imageView.image, url: nil)
+        
+    }
+    
 
 }
 

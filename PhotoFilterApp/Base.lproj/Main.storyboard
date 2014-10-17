@@ -128,14 +128,25 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gk0-Mj-V2T">
+                                <rect key="frame" x="529" y="562" width="51" height="30"/>
+                                <state key="normal" title="TWEET">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="tweetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tDX-zN-9I9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="LM6-Go-E8O" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="CWa-x2-9JV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Gk0-Mj-V2T" secondAttribute="trailing" constant="4" id="L57-y4-W3M"/>
                             <constraint firstItem="LM6-Go-E8O" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="NiU-iL-JJD"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="IkX-oU-6QJ" secondAttribute="bottom" constant="8" symbolic="YES" id="U8S-s7-46h"/>
                             <constraint firstAttribute="bottomMargin" secondItem="LM6-Go-E8O" secondAttribute="bottom" constant="46" id="W0T-MN-G4Z"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2PU-Ur-ccM" secondAttribute="bottom" constant="-100" id="YgK-eE-mR2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Gk0-Mj-V2T" secondAttribute="bottom" constant="8" id="ZXz-Pe-rkz"/>
                             <constraint firstAttribute="trailing" secondItem="LM6-Go-E8O" secondAttribute="trailing" constant="20" symbolic="YES" id="nmL-1g-Wp4"/>
                             <constraint firstAttribute="centerX" secondItem="2PU-Ur-ccM" secondAttribute="centerX" id="sXS-qv-u3W"/>
                             <constraint firstAttribute="width" secondItem="2PU-Ur-ccM" secondAttribute="width" id="uRG-1b-zrQ"/>
@@ -179,7 +190,8 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3f-0R-Uh8">
-                                <rect key="frame" x="550" y="562" width="30" height="30"/>
+                                <rect key="frame" x="538" y="529" width="42" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                 <state key="normal" title="📷">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -188,7 +200,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oac-mM-ZbT">
-                                <rect key="frame" x="20" y="670" width="30" height="30"/>
+                                <rect key="frame" x="20" y="637" width="42" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                 <state key="normal" title="✅">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -196,8 +209,8 @@
                                     <action selector="confirmButtonPressed:" destination="oep-Cd-UW1" eventType="touchUpInside" id="DGI-sQ-C7H"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eP5-2I-hG2">
-                                <rect key="frame" x="120" y="28" width="360" height="360"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eP5-2I-hG2">
+                                <rect key="frame" x="60" y="28" width="480" height="480"/>
                                 <color key="backgroundColor" red="0.31150205289999999" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="eP5-2I-hG2" secondAttribute="height" multiplier="1:1" id="MOY-Gc-CRX"/>
@@ -215,7 +228,7 @@
                             <constraint firstItem="eP5-2I-hG2" firstAttribute="top" secondItem="D4y-G3-3no" secondAttribute="bottom" constant="8" symbolic="YES" id="KX8-RG-HH7"/>
                             <constraint firstAttribute="centerX" secondItem="vIG-Qp-fsk" secondAttribute="centerX" id="Mlx-t1-5C9"/>
                             <constraint firstAttribute="trailing" secondItem="K3f-0R-Uh8" secondAttribute="trailing" constant="20" symbolic="YES" id="PNV-wB-0Pt"/>
-                            <constraint firstItem="eP5-2I-hG2" firstAttribute="width" secondItem="sHE-Xd-CbP" secondAttribute="width" multiplier="0.6" id="dKw-rW-LcV"/>
+                            <constraint firstItem="eP5-2I-hG2" firstAttribute="width" secondItem="sHE-Xd-CbP" secondAttribute="width" multiplier="0.8" id="dKw-rW-LcV"/>
                             <constraint firstItem="oac-mM-ZbT" firstAttribute="leading" secondItem="sHE-Xd-CbP" secondAttribute="leading" constant="20" symbolic="YES" id="h7B-7e-tbm"/>
                             <constraint firstItem="qZX-US-6Na" firstAttribute="top" secondItem="oac-mM-ZbT" secondAttribute="bottom" constant="-100" id="lO7-2y-MMp"/>
                         </constraints>

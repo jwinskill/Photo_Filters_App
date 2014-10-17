@@ -22,6 +22,7 @@ class AVFoundationCameraViewController: UIViewController {
     var delegate: GalleryDelegate?
     var stillImageOutput = AVCaptureStillImageOutput()
     var capturedImage: UIImage?
+    var parentImageSize: CGSize?
     
     
     override func viewDidLoad() {
@@ -53,7 +54,6 @@ class AVFoundationCameraViewController: UIViewController {
     }
 
     @IBAction func confirmButtonPressed(sender: AnyObject) {
-        println("button done got pressed")
         self.delegate?.didTapOnPicture(self.capturePreviewImageView.image!)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -68,21 +68,17 @@ class AVFoundationCameraViewController: UIViewController {
                         if videoPort.mediaType == AVMediaTypeVideo {
                             videoConnection = cameraConnection
                             break;
-                        }
                     }
                 }
             }
-            if videoConnection != nil {
-                break;
-            }
-            if (videoConnection?.supportsVideoOrientation != nil) {
-                videoConnection?.videoOrientation = interfaceOrientationToVideoOrientation(UIDevice.currentDevice().orientation)
-            }
         }
+    }
+
         self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(buffer : CMSampleBuffer!, error : NSError!) -> Void in
             var data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
             var image = UIImage(data: data)
-            self.capturePreviewImageView.image = image
+            var croppedImage = self.squareImageWithImage(image, scaledToSize: self.parentImageSize!)
+            self.capturePreviewImageView.image = croppedImage
             self.confirmButtonConstraint.constant = 8
             UIView.animateWithDuration(0.4, animations: { () -> Void in
                 self.view.layoutIfNeeded()
@@ -91,6 +87,42 @@ class AVFoundationCameraViewController: UIViewController {
             //println(image.size)
         })
     }
+    
+    func squareImageWithImage(image: UIImage, scaledToSize: CGSize) -> UIImage {
+        var ratio: CGFloat!
+        var delta: CGFloat!
+        var offset: CGPoint!
+        
+        var size = CGSizeMake(scaledToSize.width, scaledToSize.width)
+        
+        if image.size.width > image.size.height {
+            ratio = scaledToSize.width / image.size.width
+            delta = ratio * image.size.width - ratio * image.size.height
+            offset = CGPointMake(delta / 2, 0)
+        } else {
+            ratio = scaledToSize.width / image.size.height
+            delta = ratio * image.size.height - ratio * image.size.width
+            offset = CGPointMake(0, delta / 2)
+        }
+        
+        var clipRect: CGRect = CGRectMake(-offset.x, -offset.y, (ratio * image.size.width) + delta, (ratio * image.size.height) + delta)
+        
+        if UIScreen.mainScreen().respondsToSelector("scale") {
+            UIGraphicsBeginImageContextWithOptions(size, true, 0.0)
+        } else {
+            UIGraphicsBeginImageContext(size)
+        }
+        UIRectClip(clipRect)
+        image.drawInRect(clipRect)
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+
+
+    
+}
 
     
 //    override func viewWillLayoutSubviews() {
@@ -100,17 +132,17 @@ class AVFoundationCameraViewController: UIViewController {
 //        }
 //    }
 //    
-    func interfaceOrientationToVideoOrientation(deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
-        switch deviceOrientation {
-        case UIDeviceOrientation.Portrait:
-            return AVCaptureVideoOrientation.Portrait
-        case UIDeviceOrientation.LandscapeLeft:
-            return AVCaptureVideoOrientation.LandscapeLeft
-        case UIDeviceOrientation.LandscapeRight:
-            return AVCaptureVideoOrientation.LandscapeRight
-        default:
-            return AVCaptureVideoOrientation.Portrait
-        }
-    }
-}
+//    func interfaceOrientationToVideoOrientation(deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
+//        switch deviceOrientation {
+//        case UIDeviceOrientation.Portrait:
+//            return AVCaptureVideoOrientation.Portrait
+//        case UIDeviceOrientation.LandscapeLeft:
+//            return AVCaptureVideoOrientation.LandscapeLeft
+//        case UIDeviceOrientation.LandscapeRight:
+//            return AVCaptureVideoOrientation.LandscapeRight
+//        default:
+//            return AVCaptureVideoOrientation.Portrait
+//        }
+//    }
+//}
 
