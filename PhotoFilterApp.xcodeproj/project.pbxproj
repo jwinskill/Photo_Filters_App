@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03124C9C19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03124C9B19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift */; };
 		03124C9E19EDC77400D5EE46 /* FilteredThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03124C9D19EDC77400D5EE46 /* FilteredThumbnail.swift */; };
+		033FBF9719F077D400C0CD31 /* AVFoundationCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FBF9619F077D400C0CD31 /* AVFoundationCameraViewController.swift */; };
 		037D96E619EC6095007480DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037D96E519EC6095007480DF /* AppDelegate.swift */; };
 		037D96E919EC6095007480DF /* PhotoFilterApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 037D96E719EC6095007480DF /* PhotoFilterApp.xcdatamodeld */; };
 		037D96EB19EC6095007480DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037D96EA19EC6095007480DF /* ViewController.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		03124C9B19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterThumbnailsCollectionViewCell.swift; sourceTree = "<group>"; };
 		03124C9D19EDC77400D5EE46 /* FilteredThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredThumbnail.swift; sourceTree = "<group>"; };
+		033FBF9619F077D400C0CD31 /* AVFoundationCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AVFoundationCameraViewController.swift; path = ../AVFoundationCameraViewController.swift; sourceTree = "<group>"; };
 		037D96E019EC6095007480DF /* PhotoFilterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoFilterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		037D96E419EC6095007480DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		037D96E519EC6095007480DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				037D96EA19EC6095007480DF /* ViewController.swift */,
+				033FBF9619F077D400C0CD31 /* AVFoundationCameraViewController.swift */,
 				037D970F19EC663A007480DF /* GalleryViewController.swift */,
 				03D7144919EEF2B700E02F86 /* PhotosFrameworkViewController.swift */,
 			);
@@ -309,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				037D970E19EC6621007480DF /* GalleryCell.swift in Sources */,
+				033FBF9719F077D400C0CD31 /* AVFoundationCameraViewController.swift in Sources */,
 				03124C9C19EDC2B800D5EE46 /* FilterThumbnailsCollectionViewCell.swift in Sources */,
 				037D96EB19EC6095007480DF /* ViewController.swift in Sources */,
 				03D7144819EEF26000E02F86 /* PhotosFrameworkCell.swift in Sources */,
@@ -444,9 +448,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PhotoFilterApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -456,9 +463,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PhotoFilterApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

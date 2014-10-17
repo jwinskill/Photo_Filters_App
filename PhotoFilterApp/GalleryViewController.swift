@@ -17,6 +17,7 @@ protocol GalleryDelegate {
 
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var flowLayout: UICollectionViewFlowLayout!
     var images = [UIImage]()
     var delegate: GalleryDelegate?
     
@@ -27,6 +28,10 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         super.viewDidLoad()
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
+        
+        self.flowLayout = self.collectionView.collectionViewLayout as UICollectionViewFlowLayout
+        var pincher = UIPinchGestureRecognizer(target: self, action: "pinchAction:")
+        self.collectionView.addGestureRecognizer(pincher)
         
         let image1 = UIImage(named: "Photo1.jpg")
         let image2 = UIImage(named: "Photo2.jpg")
@@ -46,6 +51,36 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         self.images.append(image7)
         self.images.append(image8)
     }
+    
+    func pinchAction(pincher: UIPinchGestureRecognizer) {
+        
+        var screen = UIScreen.mainScreen()
+        var orientation = UIDevice.currentDevice().orientation.isPortrait
+        var width: CGFloat!
+        var height: CGFloat!
+        if orientation {
+            width = screen.bounds.width
+            height = screen.bounds.height
+        } else {
+            width = screen.bounds.height
+            height = screen.bounds.width
+        }
+        
+        if pincher.state == UIGestureRecognizerState.Ended {
+            self.collectionView.performBatchUpdates({ () -> Void in
+                if pincher.velocity > 0 {
+                    if (self.flowLayout.itemSize.width < width / 2) && (self.flowLayout.itemSize.height < height) {
+                        self.flowLayout.itemSize = CGSize(width: self.flowLayout.itemSize.width * 2, height: self.flowLayout.itemSize.height * 2)
+                    }
+                } else {
+                    if (self.flowLayout.itemSize.width > width / 10) && (self.flowLayout.itemSize.height > height / 10) {
+                        self.flowLayout.itemSize = CGSize(width: self.flowLayout.itemSize.width * 0.5, height: self.flowLayout.itemSize.width * 0.5)
+                    }
+                }
+            }, completion: nil)
+        }
+    }
+
     
     // MARK: UICollectionViewDataSource methods
     

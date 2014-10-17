@@ -80,6 +80,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let photosAction = UIAlertAction(title: "Photos Framework", style: UIAlertActionStyle.Default) { (action) -> Void in
             self.performSegueWithIdentifier("PHOTOS_SEGUE", sender: self)
         }
+        let avFoundationAction = UIAlertAction(title: "AVFoundation Framework", style: UIAlertActionStyle.Default) { (action) -> Void in
+            self.performSegueWithIdentifier("AVFOUNDATION_SEGUE", sender: self)
+        }
         
         let filterAction = UIAlertAction(title: "Filter", style: UIAlertActionStyle.Default) { (action) -> Void in
             self.enterFilterMode()
@@ -91,6 +94,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         alertController.addAction(cameraAction)
         alertController.addAction(photosAction)
         alertController.addAction(filterAction)
+        alertController.addAction(avFoundationAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
@@ -103,6 +107,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             destinationVC.delegate = self
             destinationVC.assetLargeImageSize = self.imageView.bounds.size
             println(self.imageView.bounds.size)
+        } else if segue.identifier == "AVFOUNDATION_SEGUE" {
+            let destinationVC = segue.destinationViewController as AVFoundationCameraViewController
+            destinationVC.delegate = self
         }
     }
     
@@ -128,7 +135,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.imageViewTrailingConstraint.constant = self.imageViewTrailingConstraint.constant / 3
         self.imageViewBottomConstraint.constant = self.imageViewBottomConstraint.constant / 3
         self.collectionViewBottomConstraint.constant = -100
-         self.photosButtonBottomConstraint.constant = 8
+        self.photosButtonBottomConstraint.constant = 8
         UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })

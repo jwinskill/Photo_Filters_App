@@ -16,6 +16,7 @@ class PhotosFrameworkViewController: UIViewController, UICollectionViewDataSourc
     var imageManager: PHCachingImageManager!
     var assetsCollection: PHAssetCollection!
     var assetFetchResults: PHFetchResult!
+    var flowLayout: UICollectionViewFlowLayout!
     var assetCellSize: CGSize!
     var assetLargeImageSize: CGSize?
     var delegate: GalleryDelegate?
@@ -28,10 +29,13 @@ class PhotosFrameworkViewController: UIViewController, UICollectionViewDataSourc
         self.assetFetchResults = PHAsset.fetchAssetsWithOptions(nil)
         
         var scale = UIScreen.mainScreen().scale
-        var flowLayout = self.photosFrameworkCollectionView.collectionViewLayout as UICollectionViewFlowLayout
+        self.flowLayout = self.photosFrameworkCollectionView.collectionViewLayout as UICollectionViewFlowLayout
         
-        var cellSize = flowLayout.itemSize
+        var cellSize = self.flowLayout.itemSize
         self.assetCellSize = CGSizeMake(cellSize.width * scale, cellSize.height * scale)
+        
+        var pincher = UIPinchGestureRecognizer(target: self, action: "pinchAction:")
+        self.photosFrameworkCollectionView.addGestureRecognizer(pincher)
         
         self.photosFrameworkCollectionView.delegate = self
     }
@@ -55,6 +59,8 @@ class PhotosFrameworkViewController: UIViewController, UICollectionViewDataSourc
         return cell
     }
     
+    // MARK: UICollectionViewDelegate methods
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("Did Select")
         
@@ -63,9 +69,41 @@ class PhotosFrameworkViewController: UIViewController, UICollectionViewDataSourc
         
         var asset = self.assetFetchResults[indexPath.row] as PHAsset
         self.imageManager.requestImageForAsset(asset, targetSize: assetSize, contentMode: PHImageContentMode.AspectFit, options: nil) { (image, info) -> Void in
-            var placeHolder = image
-            self.delegate?.didTapOnPicture(placeHolder)
+
+            self.delegate?.didTapOnPicture(image)
+            return( )
         }
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: Pinch action methods
+    
+    func pinchAction(pincher: UIPinchGestureRecognizer) {
+        
+        var screen = UIScreen.mainScreen()
+        var orientation = UIDevice.currentDevice().orientation.isPortrait
+        var width: CGFloat!
+        var height: CGFloat!
+        if orientation {
+            width = screen.bounds.width
+            height = screen.bounds.height
+        } else {
+            width = screen.bounds.height
+            height = screen.bounds.width
+        }
+        
+        if pincher.state == UIGestureRecognizerState.Ended {
+            self.photosFrameworkCollectionView.performBatchUpdates({ () -> Void in
+                if pincher.velocity > 0 {
+                    if (self.flowLayout.itemSize.width < width / 2) && (self.flowLayout.itemSize.height < height) {
+                        self.flowLayout.itemSize = CGSize(width: self.flowLayout.itemSize.width * 2, height: self.flowLayout.itemSize.height * 2)
+                    }
+                } else {
+                    if (self.flowLayout.itemSize.width > width / 10) && (self.flowLayout.itemSize.height > height / 10) {
+                        self.flowLayout.itemSize = CGSize(width: self.flowLayout.itemSize.width * 0.5, height: self.flowLayout.itemSize.width * 0.5)
+                    }
+                }
+                }, completion: nil)
+        }
     }
 }
