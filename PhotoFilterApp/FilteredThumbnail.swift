@@ -25,23 +25,39 @@ class FilteredThumbnail {
         self.gpuContext = context
     }
 
-    func applyFilter(competionHandler: (image: UIImage) -> Void) {
+    func applyFilter(image: UIImage?, competionHandler: (image: UIImage) -> Void) {
         
         self.imageQueue?.addOperationWithBlock({ () -> Void in
             
-            var image = CIImage(image: self.originalThumbnail)
-            var imageFilter = CIFilter(name: self.filterName)
-            imageFilter.setDefaults()
-            imageFilter.setValue(image, forKey: kCIInputImageKey)
-            var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
+            var newImage: CIImage
+            if image != nil {
+                newImage = CIImage(image: image!)
+            } else {
+                newImage = CIImage(image: self.originalThumbnail)
+            }
+
+            self.filter = CIFilter(name: self.filterName)
+            self.filter?.setDefaults()
+            
+            if self.filterName == "CIColorMonochrome" {
+                self.filter!.setValue(CIColor(red: self.getRandomNumber(), green: self.getRandomNumber(), blue: self.getRandomNumber()), forKey: kCIInputColorKey)
+            }
+            
+            self.filter?.setValue(newImage, forKey: kCIInputImageKey)
+            
+            var result = self.filter?.valueForKey(kCIOutputImageKey) as CIImage
             var extent = result.extent()
             var imageRef = self.gpuContext.createCGImage(result, fromRect: extent)
-            self.filter = imageFilter
+            
             self.filteredThumbnail = UIImage(CGImage: imageRef)
             
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 competionHandler(image: self.filteredThumbnail!)
             })
         })
+    }
+    
+    func getRandomNumber() -> CGFloat {
+        return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
     }
 }

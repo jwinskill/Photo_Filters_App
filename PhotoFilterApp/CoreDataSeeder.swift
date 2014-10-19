@@ -55,6 +55,10 @@ class CoreDataSeeder {
         photoEffectNoir.name = "CIPhotoEffectNoir"
         photoEffectNoir.favorited = true
         
+        var monochrome = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: self.managedObjectContext) as Filter
+        monochrome.name = "CIColorMonochrome"
+        monochrome.favorited = false
+        
 
     
         var error: NSError?

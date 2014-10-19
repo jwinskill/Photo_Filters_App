@@ -31,6 +31,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var filters = [Filter]()
     var imageQueue = NSOperationQueue()
     var filterThumbnails = [FilteredThumbnail]()
+    var originalImage: UIImage?
     
     // Properties fro social
     var twitterAccount: ACAccount?
@@ -40,6 +41,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         self.generateThumbnail()
+        self.originalImage = self.imageView.image
         var options = [kCIContextWorkingColorSpace: NSNull()]
         var eaglContext = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
         self.context = CIContext(EAGLContext: eaglContext, options: options)
@@ -74,9 +76,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let imagePicker = UIImagePickerController()
             imagePicker.allowsEditing = true
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-                
+                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+            } else {
+                imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
             }
-            imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+            
             imagePicker.delegate = self
             self.presentViewController(imagePicker, animated: true, completion: nil)
             
@@ -93,9 +97,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
 
         // Add the UIAlertActions to the alertController
+        if UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Rear) {
+            alertController.addAction(cameraAction)
+        }
+        
         alertController.addAction(galleryAction)
         alertController.addAction(cancelAction)
-        alertController.addAction(cameraAction)
         alertController.addAction(photosAction)
         alertController.addAction(filterAction)
         alertController.addAction(avFoundationAction)
@@ -170,7 +177,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             cell.thumbnailImageView.image = filterThumbnail.filteredThumbnail
         } else {
             cell.thumbnailImageView.image = filterThumbnail.originalThumbnail
-            filterThumbnail.applyFilter({ (image) -> Void in
+            filterThumbnail.applyFilter(nil,{ (image) -> Void in
                 cell.thumbnailImageView.image = image
             })
         }
@@ -182,19 +189,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var filteredThumbnail = FilteredThumbnail(name: self.filters[indexPath.row].name, thumbnail: self.imageView.image!, queue: imageQueue, context: self.context!)
-       
-        var imageFilter = CIFilter(name: filters[indexPath.row].name)
-        filteredThumbnail.applyFilter({ (image) -> Void in
-           // var scale = UIScreen.mainScreen().scale
-            self.imageView.image = UIImage(CGImage: image.CGImage, scale: 2.0, orientation: UIImageOrientation.Up)
+        let filterSelected = self.filterThumbnails[indexPath.row]
+        filterSelected.applyFilter(self.originalImage, { (image) -> Void in
+
+            self.imageView.image = UIImage(CGImage: image.CGImage, scale: UIScreen.mainScreen().scale, orientation: UIImageOrientation.Up)
         })
     }
     
     // MARK: UIImagePickerControllerDelegate Methods
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        self.imageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.originalImage = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.imageView.image = self.originalImage
         self.generateThumbnail()
         self.resetFilterThumbnails()
         self.filterThumbnailsCollectionView.reloadData()
@@ -205,6 +211,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func didTapOnPicture(image: UIImage) {
         self.imageView.image = image
+        self.originalImage = image
         self.generateThumbnail()
         self.resetFilterThumbnails()
         self.filterThumbnailsCollectionView.reloadData()
@@ -230,7 +237,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             var filterName = filter.name
             var thumbnail = FilteredThumbnail(name: filterName, thumbnail: self.originalThumbnail!, queue: self.imageQueue, context: context!)
             newFilters.append(thumbnail)
-        }
+            }
+
         self.filterThumbnails = newFilters
     }
     

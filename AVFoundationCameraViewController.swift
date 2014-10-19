@@ -119,30 +119,6 @@ class AVFoundationCameraViewController: UIViewController {
         
         return newImage
     }
-
-
     
 }
-
-    
-//    override func viewWillLayoutSubviews() {
-//        self.previewLayer.frame = photoPreviewView.bounds
-//        if self.previewLayer.connection.supportsVideoOrientation {
-//            self.previewLayer.connection.videoOrientation = interfaceOrientationToVideoOrientation(UIApplication.sharedApplication().statusBarOrientation)
-//        }
-//    }
-//    
-//    func interfaceOrientationToVideoOrientation(deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
-//        switch deviceOrientation {
-//        case UIDeviceOrientation.Portrait:
-//            return AVCaptureVideoOrientation.Portrait
-//        case UIDeviceOrientation.LandscapeLeft:
-//            return AVCaptureVideoOrientation.LandscapeLeft
-//        case UIDeviceOrientation.LandscapeRight:
-//            return AVCaptureVideoOrientation.LandscapeRight
-//        default:
-//            return AVCaptureVideoOrientation.Portrait
-//        }
-//    }
-//}
 
