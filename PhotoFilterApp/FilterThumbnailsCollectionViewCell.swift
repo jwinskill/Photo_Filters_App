@@ -10,5 +10,5 @@ import UIKit
 
 class FilterThumbnailsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
-    
+    @IBOutlet weak var filterLabel: UILabel!
 }

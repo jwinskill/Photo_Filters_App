@@ -15,6 +15,7 @@ import Accounts
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, GalleryDelegate {
     
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var filterThumbnailsCollectionView: UICollectionView!
     
@@ -24,6 +25,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var photosButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var filterButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tweetButtonBottomConstraint: NSLayoutConstraint!
 
     // Properties for filtering
     var context: CIContext?
@@ -67,7 +70,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let alertController = UIAlertController(title: nil, message: "Choose an option", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         // Create UIAlertActions to add to the alertController
-        let galleryAction = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
+        let galleryAction = UIAlertAction(title: "Stock Images", style: UIAlertActionStyle.Default) { (action) -> Void in
             self.performSegueWithIdentifier("SHOW_GALLERY", sender: self)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action) -> Void in
@@ -85,15 +88,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.presentViewController(imagePicker, animated: true, completion: nil)
             
         }
-        let photosAction = UIAlertAction(title: "Photos Framework", style: UIAlertActionStyle.Default) { (action) -> Void in
+        let photosAction = UIAlertAction(title: "User Photos", style: UIAlertActionStyle.Default) { (action) -> Void in
             self.performSegueWithIdentifier("PHOTOS_SEGUE", sender: self)
         }
-        let avFoundationAction = UIAlertAction(title: "AVFoundation Framework", style: UIAlertActionStyle.Default) { (action) -> Void in
+        let avFoundationAction = UIAlertAction(title: "Custom Camera", style: UIAlertActionStyle.Default) { (action) -> Void in
             self.performSegueWithIdentifier("AVFOUNDATION_SEGUE", sender: self)
-        }
-        
-        let filterAction = UIAlertAction(title: "Filter", style: UIAlertActionStyle.Default) { (action) -> Void in
-            self.enterFilterMode()
         }
 
         // Add the UIAlertActions to the alertController
@@ -104,7 +103,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         alertController.addAction(galleryAction)
         alertController.addAction(cancelAction)
         alertController.addAction(photosAction)
-        alertController.addAction(filterAction)
         alertController.addAction(avFoundationAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
@@ -127,12 +125,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // MARK: Filter Methods
     
+    @IBAction func filterButtonPressed(sender: AnyObject) {
+        self.enterFilterMode()
+    }
+    
     func enterFilterMode() {
         self.imageViewLeadingConstraint.constant = self.imageViewLeadingConstraint.constant * 3
         self.imageViewTrailingConstraint.constant = self.imageViewTrailingConstraint.constant * 3
         self.imageViewBottomConstraint.constant = self.imageViewBottomConstraint.constant * 3
         self.collectionViewBottomConstraint.constant = 46
         self.photosButtonBottomConstraint.constant = -100
+        self.tweetButtonBottomConstraint.constant = -100
+        self.filterButtonBottomConstraint.constant = -100
         UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
@@ -146,8 +150,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.imageViewLeadingConstraint.constant = self.imageViewLeadingConstraint.constant / 3
         self.imageViewTrailingConstraint.constant = self.imageViewTrailingConstraint.constant / 3
         self.imageViewBottomConstraint.constant = self.imageViewBottomConstraint.constant / 3
-        self.collectionViewBottomConstraint.constant = -100
+        self.collectionViewBottomConstraint.constant = -300
         self.photosButtonBottomConstraint.constant = 8
+        self.tweetButtonBottomConstraint.constant = 8
+        self.filterButtonBottomConstraint.constant = 8
         UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
@@ -175,11 +181,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if filterThumbnail.filteredThumbnail != nil {
             cell.thumbnailImageView.image = filterThumbnail.filteredThumbnail
+            cell.filterLabel.text = filterLabelSwitch(filterThumbnail.filterName)
         } else {
             cell.thumbnailImageView.image = filterThumbnail.originalThumbnail
+            cell.filterLabel.text = filterThumbnail.filterName
+            cell.filterLabel.text = filterLabelSwitch(filterThumbnail.filterName)
             filterThumbnail.applyFilter(nil,{ (image) -> Void in
                 cell.thumbnailImageView.image = image
             })
+            
         }
         
         return cell
@@ -203,6 +213,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.imageView.image = self.originalImage
         self.generateThumbnail()
         self.resetFilterThumbnails()
+        self.filterButtonBottomConstraint.constant = 8
+        self.tweetButtonBottomConstraint.constant = 8
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
         self.filterThumbnailsCollectionView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -215,6 +230,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.generateThumbnail()
         self.resetFilterThumbnails()
         self.filterThumbnailsCollectionView.reloadData()
+        self.filterButtonBottomConstraint.constant = 8
+        self.tweetButtonBottomConstraint.constant = 8
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
     }
     
     // MARK: CoreData Methods
@@ -278,6 +298,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func tweetButtonPressed(sender: AnyObject) {
         self.tweet(nil, image: self.imageView.image, url: nil)
         
+    }
+    
+    // MARK: Miscellaneous methods
+    
+    func filterLabelSwitch (filterName: String) -> String {
+        
+        switch filterName {
+        case "CISepiaTone":
+            return "Sepia"
+        case "CIPhotoEffectTonal":
+            return "Tonal"
+        case "CIPixellate":
+            return "Pixellate"
+        case "CIColorPosterize":
+            return "Posterize"
+        case "CIGlassDistortion":
+                return "Glass"
+        case "CIPhotoEffectTransfer":
+            return "Transfer"
+        case "CIPhotoEffectInstant":
+                return "Instant"
+        case "CIPhotoEffectNoir":
+            return "Noir"
+        case "CIColorMonochrome":
+            return "Random"
+        case "CIPhotoEffectProcess":
+            return "Process"
+        default:
+            return "Label"
+        }
     }
     
 

@@ -40,13 +40,9 @@ class CoreDataSeeder {
         photoEffectTransfer.name = "CIPhotoEffectTransfer"
         photoEffectTransfer.favorited = true
         
-        var bloom = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: self.managedObjectContext) as Filter
-        bloom.name = "CIBloom"
-        bloom.favorited = true
-        
-        var gloom = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: self.managedObjectContext) as Filter
-        gloom.name = "CIGloom"
-        gloom.favorited = true
+        var process = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: self.managedObjectContext) as Filter
+        process.name = "CIPhotoEffectProcess"
+        process.favorited = true
         
         var photoEffectInstant = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: self.managedObjectContext) as Filter
         photoEffectInstant.name = "CIPhotoEffectInstant"
